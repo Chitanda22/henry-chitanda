@@ -2,16 +2,16 @@
 
 <div style="text-align:center; margin-top:20px;">
     <h1>Henry Chitanda</h1>
-    <h2>Mechatronics Engineer</h2>
+    <h2>Pengu Eng</h2>
     <p>
         Quality Control | Flange Management | Instrumentation |
-        Mechanical Engineering
+        Pengu Eng
     </p>
 </div>
 
 <div style="text-align:center; font-family:Arial;">
     <h1 style="color:#0A66C2;">Henry Chitanda</h1>
-    <h3 style="color:gray;">Mechatronics Engineer</h3>
+    <h3 style="color:gray;">Pengu Eng</h3>
     <p style="width:70%; margin:auto; line-height:1.6;">
         Passionate Mechatronics Engineer with experience in Quality Control,
         Flange Management, Instrumentation, and Mechanical Engineering.
