@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry — Mechanical &amp; Mechatronics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   HOW TO EDIT THIS PAGE
+   ------------------------------------------------------------
+   Almost everything you'll want to change lives in the CONTENT
+   object near the bottom of this file, inside the <script> tag.
+   Look for "EDIT YOUR TEXT BELOW". Change the words there and
+   save — you don't need to touch the HTML or CSS.
+   ============================================================ */
+
+:root{
+  --paper:#0e1f2b;
+  --paper-line:#1c3547;
+  --blueprint:#eef3f5;
+  --blueprint-line:#c7d6dc;
+  --ink:#eaf1f4;
+  --ink-dim:#9fb4bf;
+  --steel:#5c7684;
+  --safety:#f2a93b;
+  --safety-dim:#8a5d1e;
+  --ok:#6fbf8b;
+  --font-display:'JetBrains Mono', monospace;
+  --font-body:'Inter', sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.5;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+
+/* ---- blueprint grid backdrop ---- */
+.grid-bg{
+  position:relative;
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
+}
+.grid-bg::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 200px 200px;
+  opacity:0.6;
+  pointer-events:none;
+}
+
+a{color:var(--safety);}
+:focus-visible{outline:2px solid var(--safety); outline-offset:3px;}
+
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+/* ---- top nav ---- */
+header.nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,31,43,0.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--paper-line);
+}
+.nav-inner{
+  max-width:1080px; margin:0 auto; padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; flex-wrap:wrap;
+}
+.nav-mark{
+  font-family:var(--font-display); font-weight:700; letter-spacing:0.04em;
+  font-size:14px; color:var(--ink); display:flex; align-items:center; gap:8px;
+}
+.nav-mark .dot{width:8px; height:8px; background:var(--safety); border-radius:50%; display:inline-block;}
+.nav-links{display:flex; gap:22px; flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--font-display); font-size:12px; letter-spacing:0.08em;
+  text-transform:uppercase; text-decoration:none; color:var(--ink-dim);
+  transition:color .15s ease;
+}
+.nav-links a:hover{color:var(--safety);}
+
+/* ---- hero / title-block sheet ---- */
+.sheet{
+  position:relative;
+  border:1px solid var(--paper-line);
+  margin:28px 24px 0;
+}
+.sheet-inner{padding:64px 40px 40px;}
+.eyebrow{
+  font-family:var(--font-display); font-size:12px; letter-spacing:0.18em;
+  color:var(--safety); text-transform:uppercase; margin:0 0 18px;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:"§"; color:var(--steel);}
+h1.name{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(34px, 6vw, 64px); line-height:1.05; margin:0 0 10px;
+  letter-spacing:-0.01em;
+}
+p.role{
+  font-family:var(--font-display); font-size:clamp(14px,2vw,18px);
+  color:var(--ink-dim); margin:0 0 26px;
+}
+p.tagline{
+  max-width:640px; font-size:16px; color:var(--ink); margin:0 0 34px;
+}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{
+  font-family:var(--font-display); font-size:13px; letter-spacing:0.04em;
+  text-decoration:none; padding:12px 20px; border:1px solid var(--safety);
+  color:var(--safety); transition:background .15s ease, color .15s ease;
+}
+.btn:hover{background:var(--safety); color:var(--paper);}
+.btn.ghost{border-color:var(--paper-line); color:var(--ink-dim);}
+.btn.ghost:hover{border-color:var(--steel); color:var(--ink); background:transparent;}
+
+/* title block, bottom-right, like a real drawing sheet */
+.title-block{
+  border-top:1px solid var(--paper-line);
+  display:grid; grid-template-columns:repeat(4, 1fr);
+}
+.title-block .cell{
+  padding:12px 16px; border-right:1px solid var(--paper-line);
+  border-top:1px solid var(--paper-line);
+}
+.title-block .cell:last-child{border-right:none;}
+.title-block .cell .k{
+  font-family:var(--font-display); font-size:10px; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--steel); margin:0 0 4px;
+}
+.title-block .cell .v{
+  font-family:var(--font-display); font-size:13px; color:var(--ink);
+}
+
+/* ---- section shell ---- */
+section{padding:76px 24px;}
+.section-head{max-width:640px; margin:0 auto 44px; text-align:left;}
+.section-head .tag{
+  font-family:var(--font-display); font-size:12px; letter-spacing:0.16em;
+  color:var(--safety); text-transform:uppercase; display:block; margin-bottom:10px;
+}
+.section-head h2{
+  font-family:var(--font-display); font-size:clamp(22px,3.4vw,32px);
+  margin:0 0 12px; font-weight:700;
+}
+.section-head p{color:var(--ink-dim); margin:0; font-size:15px;}
+
+/* ---- about ---- */
+.about-grid{
+  max-width:1080px; margin:0 auto; display:grid;
+  grid-template-columns: 1.3fr 0.7fr; gap:40px;
+}
+.about-grid p{font-size:16px; color:var(--ink); margin:0 0 16px;}
+.spec-card{
+  border:1px solid var(--paper-line); padding:20px;
+  font-family:var(--font-display);
+}
+.spec-card .row{
+  display:flex; justify-content:space-between; padding:9px 0;
+  border-bottom:1px dashed var(--paper-line); font-size:13px;
+}
+.spec-card .row:last-child{border-bottom:none;}
+.spec-card .row .k{color:var(--ink-dim);}
+.spec-card .row .v{color:var(--ink); text-align:right;}
+
+/* ---- experience: pipeline schematic ---- */
+#experience{background:linear-gradient(180deg, transparent, rgba(255,255,255,0.02) 40%, transparent);}
+.pipeline{max-width:1080px; margin:0 auto; position:relative;}
+.pipeline::before{
+  content:""; position:absolute; left:19px; top:8px; bottom:8px; width:2px;
+  background:repeating-linear-gradient(180deg, var(--steel) 0 8px, transparent 8px 14px);
+}
+.node{
+  position:relative; padding:0 0 44px 56px;
+}
+.node:last-child{padding-bottom:4px;}
+.node .valve{
+  position:absolute; left:0; top:2px; width:40px; height:40px;
+  border:2px solid var(--safety); border-radius:50%;
+  background:var(--paper);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-size:11px; color:var(--safety); font-weight:700;
+}
+.node .flow-tag{
+  font-family:var(--font-display); font-size:11px; color:var(--steel);
+  letter-spacing:0.08em; margin:0 0 6px; text-transform:uppercase;
+}
+.node h3{margin:0 0 4px; font-size:19px; font-family:var(--font-display);}
+.node .org{color:var(--ink-dim); font-size:14px; margin:0 0 12px; font-family:var(--font-display);}
+.node ul{margin:0; padding-left:18px; color:var(--ink);}
+.node li{margin-bottom:6px; font-size:15px;}
+
+/* ---- qualifications: stamped certificates ---- */
+.stamp-grid{
+  max-width:1080px; margin:0 auto; display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px;
+}
+.stamp{
+  border:1px solid var(--paper-line); padding:20px; position:relative;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.stamp:hover{border-color:var(--safety); transform:translateY(-2px);}
+.stamp .code{
+  font-family:var(--font-display); font-size:11px; color:var(--safety);
+  letter-spacing:0.1em; margin-bottom:10px; display:block;
+}
+.stamp h4{margin:0 0 6px; font-size:16px; font-family:var(--font-display);}
+.stamp p{margin:0; font-size:13px; color:var(--ink-dim);}
+.stamp .ring{
+  position:absolute; top:16px; right:16px; width:26px; height:26px;
+  border:2px solid var(--ok); border-radius:50%; opacity:0.85;
+}
+.stamp .ring::after{
+  content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:var(--ok); font-size:12px; font-weight:700;
+}
+
+/* ---- toolkit: gauge-style tags ---- */
+.toolkit-cols{
+  max-width:1080px; margin:0 auto; display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:32px;
+}
+.toolkit-col h4{
+  font-family:var(--font-display); font-size:13px; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--steel); margin:0 0 16px;
+  padding-bottom:8px; border-bottom:1px solid var(--paper-line);
+}
+.tag-list{display:flex; flex-wrap:wrap; gap:8px;}
+.tag{
+  font-family:var(--font-display); font-size:12px; padding:7px 12px;
+  border:1px solid var(--paper-line); color:var(--ink-dim);
+}
+
+/* ---- contact / footer title block ---- */
+#contact{padding-top:40px;}
+.contact-sheet{
+  max-width:1080px; margin:0 auto; border:1px solid var(--paper-line);
+  padding:48px 40px; text-align:left;
+}
+.contact-sheet h2{
+  font-family:var(--font-display); font-size:clamp(24px,4vw,36px); margin:0 0 14px;
+}
+.contact-sheet p{color:var(--ink-dim); max-width:520px; margin:0 0 28px;}
+.contact-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;
+  margin-bottom:32px;
+}
+.contact-grid .item .k{
+  font-family:var(--font-display); font-size:10px; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--safety); margin-bottom:6px;
+}
+.contact-grid .item .v{font-size:15px; color:var(--ink);}
+.contact-grid .item .v a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--paper-line);}
+.contact-grid .item .v a:hover{color:var(--safety); border-color:var(--safety);}
+
+footer{
+  text-align:center; padding:28px 24px 40px; color:var(--steel);
+  font-family:var(--font-display); font-size:11px; letter-spacing:0.06em;
+}
+
+/* ---- scroll reveal ---- */
+.reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+@media (max-width:760px){
+  .about-grid{grid-template-columns:1fr;}
+  .title-block{grid-template-columns:repeat(2,1fr);}
+  .sheet-inner{padding:48px 22px 28px;}
+}
+</style>
+</head>
+<body class="grid-bg">
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark"><span class="dot"></span><span id="nav-name">H. —— ENGINEERING</span></div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#qualifications">Qualifications</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sheet">
+  <div class="sheet-inner">
+    <p class="eyebrow" id="hero-eyebrow">DRAWING NO. CV-001</p>
+    <h1 class="name" id="hero-name">Name</h1>
+    <p class="role" id="hero-role">Role</p>
+    <p class="tagline" id="hero-tagline">Tagline</p>
+    <div class="hero-ctas">
+      <a class="btn" id="hero-cta-primary" href="#contact">Get in touch</a>
+      <a class="btn ghost" id="hero-cta-secondary" href="#experience">View experience</a>
+    </div>
+  </div>
+  <div class="title-block" id="title-block"></div>
+</div>
+
+<section id="about" class="reveal">
+  <div class="section-head">
+    <span class="tag">01 — Overview</span>
+    <h2 id="about-heading">About</h2>
+  </div>
+  <div class="about-grid">
+    <div id="about-body"></div>
+    <div class="spec-card" id="about-spec"></div>
+  </div>
+</section>
+
+<section id="experience" class="reveal">
+  <div class="section-head">
+    <span class="tag">02 — Field Log</span>
+    <h2 id="experience-heading">Experience</h2>
+  </div>
+  <div class="pipeline" id="experience-list"></div>
+</section>
+
+<section id="qualifications" class="reveal">
+  <div class="section-head">
+    <span class="tag">03 — Certified</span>
+    <h2 id="quals-heading">Qualifications</h2>
+  </div>
+  <div class="stamp-grid" id="quals-list"></div>
+</section>
+
+<section id="toolkit" class="reveal">
+  <div class="section-head">
+    <span class="tag">04 — Working Knowledge</span>
+    <h2 id="toolkit-heading">Toolkit</h2>
+  </div>
+  <div class="toolkit-cols" id="toolkit-list"></div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="contact-sheet">
+    <h2 id="contact-heading">Contact</h2>
+    <p id="contact-body"></p>
+    <div class="contact-grid" id="contact-grid"></div>
+  </div>
+</section>
+
+<footer id="footer-text"></footer>
+
+<script>
+/* ============================================================
+   EDIT YOUR TEXT BELOW
+   ------------------------------------------------------------
+   This is the only part of the file you should normally need
+   to change. Replace the values on the right of each colon.
+   Keep the quotation marks. For lists, copy a line inside the
+   [ ] brackets and edit it, or delete a line you don't need.
+   ============================================================ */
+
+const CONTENT = {
+
+  // Browser tab title and small mark in the top-left nav bar
+  siteTitle: "Henry — Mechanical & Mechatronics Engineer",
+  navMark: "H. —— ENGINEERING",
+
+  // ---- HERO (top banner) ----
+  hero: {
+    drawingNumber: "DRAWING NO. CV-001",   // small label above the name
+    name: "Henry [Surname]",
+    role: "Mechanical & Mechatronics Engineer",
+    tagline: "Field-tested across pipeline construction, industrial maintenance, and quality control — comfortable moving between mechanical, electrical, and instrumentation work on live industrial sites.",
+    primaryCtaLabel: "Get in touch",
+    secondaryCtaLabel: "View experience",
+    // The four boxes along the bottom of the hero, like a drawing title block
+    titleBlock: [
+      { label: "Based in",  value: "Tanzania" },
+      { label: "Discipline", value: "Mechanical / Mechatronics" },
+      { label: "Scale",      value: "1:1 — Hands-on" },
+      { label: "Rev.",       value: "2026" }
+    ]
+  },
+
+  // ---- ABOUT ----
+  about: {
+    heading: "About",
+    // Each item in this list becomes its own paragraph
+    paragraphs: [
+      "I'm a mechanical and mechatronics engineer with hands-on experience spanning quality control, pipeline construction, and industrial maintenance. I work comfortably across mechanical, electrical, and instrumentation systems — the kind of range that industrial sites actually need day to day.",
+      "My background includes flange management and quality control on a major crude oil pipeline project, alongside welding, coating, and instrumentation work in a heavy industrial paper mill environment. I read technical drawings fluently and I'm equally at home troubleshooting a fault as I am verifying a spec."
+    ],
+    // Small fact panel on the right of the About section
+    specSheet: {
+      heading: "SPEC SHEET",
+      rows: [
+        { k: "Core discipline", v: "Mechanical / Mechatronics" },
+        { k: "Also covers", v: "Electrical & Instrumentation" },
+        { k: "Standards", v: "ASME, API" },
+        { k: "Drawings", v: "P&ID interpretation" },
+        { k: "Location", v: "Tanzania" }
+      ]
+    }
+  },
+
+  // ---- EXPERIENCE (shown as a pipeline / timeline) ----
+  experience: {
+    heading: "Experience",
+    // Add or remove entries freely — each becomes one node on the line
+    roles: [
+      {
+        tag: "EACOP Project",
+        title: "Flange Management / Quality Control",
+        org: "China Petroleum Pipeline Engineering Co., Ltd. (CPP) — East African Crude Oil Pipeline",
+        points: [
+          "Verified flange assembly quality against ASME and API standards on active pipeline construction.",
+          "Interpreted project-specific P&ID drawings and detailed valve specifications.",
+          "Coordinated quality checks across mechanical and coating work streams."
+        ]
+      },
+      {
+        tag: "Mufindi Paper Mills",
+        title: "HDPE Welder / Coating Operator & Industrial Instrumentation Technician",
+        org: "Mufindi Paper Mills",
+        points: [
+          "Carried out HDPE welding and coating work to specification.",
+          "Maintained and troubleshot industrial instrumentation across mill operations.",
+          "Worked across mechanical and electro-instrumentation systems in a live production environment."
+        ]
+      }
+    ]
+  },
+
+  // ---- QUALIFICATIONS (shown as stamped certificates) ----
+  qualifications: {
+    heading: "Qualifications",
+    items: [
+      { code: "VETA", title: "Fitter Mechanics", note: "National trade qualification" },
+      { code: "VETA", title: "Electrical Installation", note: "National trade qualification" },
+      { code: "VETA", title: "Welding & Metal Fabrication", note: "National trade qualification" },
+      { code: "VETA", title: "Electronics", note: "National trade qualification" }
+    ]
+  },
+
+  // ---- TOOLKIT (skills grouped into columns) ----
+  toolkit: {
+    heading: "Toolkit",
+    columns: [
+      {
+        title: "Standards & Drawings",
+        skills: ["P&ID interpretation", "ASME standards", "API standards", "Mechanical drawing reading", "Valve specification"]
+      },
+      {
+        title: "Hands-on Trades",
+        skills: ["Welding & fabrication", "HDPE welding & coating", "Electrical installation", "Fitter mechanics", "Instrumentation"]
+      },
+      {
+        title: "Engineering Concepts",
+        skills: ["Reliability engineering (MTBF/MTTR)", "Quality control", "Industrial maintenance", "Troubleshooting"]
+      },
+      {
+        title: "Software",
+        skills: ["Autodesk Navisworks"]
+      }
+    ]
+  },
+
+  // ---- CONTACT ----
+  contact: {
+    heading: "Let's work together",
+    body: "Open to mechanical, mechatronics, and electro-instrumentation roles — on-site, project-based, or full-time.",
+    // Add, remove, or edit contact rows freely
+    fields: [
+      { label: "Email",    value: "your.email@example.com",        link: "mailto:your.email@example.com" },
+      { label: "Phone",    value: "+255 XXX XXX XXX",               link: "tel:+255XXXXXXXXX" },
+      { label: "Location", value: "Dar es Salaam, Tanzania",        link: "" },
+      { label: "LinkedIn", value: "linkedin.com/in/your-profile",   link: "https://linkedin.com/in/your-profile" }
+    ]
+  },
+
+  footer: "PLOTTED ON RECYCLED PAPER — LAST REVISED 2026"
+};
+
+/* ============================================================
+   RENDER LOGIC — you shouldn't need to edit anything below
+   ============================================================ */
+(function render(){
+  document.title = CONTENT.siteTitle;
+  document.getElementById('nav-name').textContent = CONTENT.navMark;
+
+  // Hero
+  document.getElementById('hero-eyebrow').textContent = CONTENT.hero.drawingNumber;
+  document.getElementById('hero-name').textContent = CONTENT.hero.name;
+  document.getElementById('hero-role').textContent = CONTENT.hero.role;
+  document.getElementById('hero-tagline').textContent = CONTENT.hero.tagline;
+  document.getElementById('hero-cta-primary').textContent = CONTENT.hero.primaryCtaLabel;
+  document.getElementById('hero-cta-secondary').textContent = CONTENT.hero.secondaryCtaLabel;
+
+  const tb = document.getElementById('title-block');
+  CONTENT.hero.titleBlock.forEach(cell=>{
+    const div = document.createElement('div');
+    div.className = 'cell';
+    div.innerHTML = `<div class="k">${cell.label}</div><div class="v">${cell.value}</div>`;
+    tb.appendChild(div);
+  });
+
+  // About
+  document.getElementById('about-heading').textContent = CONTENT.about.heading;
+  const aboutBody = document.getElementById('about-body');
+  CONTENT.about.paragraphs.forEach(p=>{
+    const el = document.createElement('p');
+    el.textContent = p;
+    aboutBody.appendChild(el);
+  });
+  const specCard = document.getElementById('about-spec');
+  let specHtml = `<div class="row"><span class="k" style="color:var(--safety)">${CONTENT.about.specSheet.heading}</span><span class="v"></span></div>`;
+  CONTENT.about.specSheet.rows.forEach(r=>{
+    specHtml += `<div class="row"><span class="k">${r.k}</span><span class="v">${r.v}</span></div>`;
+  });
+  specCard.innerHTML = specHtml;
+
+  // Experience
+  document.getElementById('experience-heading').textContent = CONTENT.experience.heading;
+  const expList = document.getElementById('experience-list');
+  CONTENT.experience.roles.forEach((role, i)=>{
+    const node = document.createElement('div');
+    node.className = 'node';
+    node.innerHTML = `
+      <div class="valve">${String(i+1).padStart(2,'0')}</div>
+      <p class="flow-tag">${role.tag}</p>
+      <h3>${role.title}</h3>
+      <p class="org">${role.org}</p>
+      <ul>${role.points.map(pt=>`<li>${pt}</li>`).join('')}</ul>
+    `;
+    expList.appendChild(node);
+  });
+
+  // Qualifications
+  document.getElementById('quals-heading').textContent = CONTENT.qualifications.heading;
+  const qualsList = document.getElementById('quals-list');
+  CONTENT.qualifications.items.forEach(item=>{
+    const stamp = document.createElement('div');
+    stamp.className = 'stamp';
+    stamp.innerHTML = `
+      <div class="ring"></div>
+      <span class="code">${item.code}</span>
+      <h4>${item.title}</h4>
+      <p>${item.note}</p>
+    `;
+    qualsList.appendChild(stamp);
+  });
+
+  // Toolkit
+  document.getElementById('toolkit-heading').textContent = CONTENT.toolkit.heading;
+  const toolkitList = document.getElementById('toolkit-list');
+  CONTENT.toolkit.columns.forEach(col=>{
+    const colEl = document.createElement('div');
+    colEl.className = 'toolkit-col';
+    colEl.innerHTML = `
+      <h4>${col.title}</h4>
+      <div class="tag-list">${col.skills.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+    `;
+    toolkitList.appendChild(colEl);
+  });
+
+  // Contact
+  document.getElementById('contact-heading').textContent = CONTENT.contact.heading;
+  document.getElementById('contact-body').textContent = CONTENT.contact.body;
+  const contactGrid = document.getElementById('contact-grid');
+  CONTENT.contact.fields.forEach(f=>{
+    const item = document.createElement('div');
+    item.className = 'item';
+    const valueHtml = f.link ? `<a href="${f.link}">${f.value}</a>` : f.value;
+    item.innerHTML = `<div class="k">${f.label}</div><div class="v">${valueHtml}</div>`;
+    contactGrid.appendChild(item);
+  });
+
+  document.getElementById('footer-text').textContent = CONTENT.footer;
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
