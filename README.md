@@ -16,6 +16,7 @@
     <h1 style="color:#0A66C2;">Henry Chitanda</h1>
     <h3 style="color:gray;">Pengu Eng</h3>
     <p style="width:70%; margin:auto; line-height:1.6;">
+       
         Passionate Mechatronics Engineer with experience in Quality Control,
         Flange Management, Instrumentation, and Mechanical Engineering.
         Dedicated to delivering safe, efficient, and high-quality engineering solutions.
