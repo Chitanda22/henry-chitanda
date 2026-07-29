@@ -22,18 +22,4 @@
 
 <nav>
     <a href="#home">Home</a>
-</nav>
 
-<section id="home">
-
-    <img src="images/profile.jpg" alt="Profile">
-
-    <h1>Henry Chitanda</h1>
-
-    <h2>Mechatronics Engineer</h2>
-
-    <p>
-        Quality Control | Flange Management | Instrumentation
-    </p>
-
-</section>
