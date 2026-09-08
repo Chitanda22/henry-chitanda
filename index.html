@@ -18,12 +18,47 @@ li{margin-bottom:10px;font-size:15px;}
 .tag{display:inline-block;background:#1c3547;color:#f2a93b;padding:6px 12px;border-radius:4px;margin:4px 6px 4px 0;font-size:13px;}
 a{color:#f2a93b;}
 .photo-grid{display:flex;gap:10px;margin-top:12px;}
-.photo-box{flex:1;aspect-ratio:4/3;border:2px dashed #2c4a5e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#5c7688;font-size:13px;text-align:center;background:#0a1822;}
+.photo-box{flex:1;aspect-ratio:4/3;border:2px dashed #2c4a5e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#5c7688;font-size:13px;text-align:center;background:#0a1822;cursor:pointer;}
 .photo-box img{width:100%;height:100%;object-fit:cover;border-radius:4px;}
+.photo-grid.wrap-grid{flex-wrap:wrap;}
+.photo-grid.wrap-grid .photo-box{flex:0 0 calc(33.333% - 7px);}
+@media (max-width:480px){
+  .photo-grid.wrap-grid .photo-box{flex:0 0 calc(50% - 5px);}
+}
+.social-links{display:flex;gap:14px;margin-top:16px;}
+.social-links a{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:1px solid #1c3547;border-radius:50%;background:#0a1822;color:#eaf1f4;transition:background 0.2s,border-color 0.2s;}
+.social-links a:hover{background:#1c3547;border-color:#f2a93b;}
+.social-links svg{width:20px;height:20px;fill:currentColor;}
+.carousel{position:relative;overflow:hidden;border-radius:6px;aspect-ratio:4/3;margin-top:12px;}
+.carousel-track{display:flex;height:100%;transition:transform 0.6s ease-in-out;}
+.carousel-track .photo-box{flex:0 0 100%;height:100%;margin:0;border-radius:0;}
+.profile-photo{width:140px;height:140px;border-radius:50%;border:3px solid #f2a93b;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0a1822;color:#5c7688;font-size:13px;text-align:center;cursor:pointer;margin-bottom:20px;}
+.profile-photo img{width:100%;height:100%;object-fit:cover;}
+#home{text-align:center;}
+#home .profile-photo{margin-left:auto;margin-right:auto;}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:100;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:85%;max-height:80%;border-radius:6px;}
+.lightbox-close{position:absolute;top:20px;right:30px;color:#eaf1f4;font-size:32px;cursor:pointer;background:none;border:none;line-height:1;}
+.lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);background:none;border:none;color:#eaf1f4;font-size:40px;cursor:pointer;padding:10px 16px;}
+.lightbox-prev{left:10px;}
+.lightbox-next{right:10px;}
+.lightbox-caption{position:absolute;bottom:20px;left:0;width:100%;text-align:center;color:#9fb4bf;font-size:14px;}
 nav{position:sticky;top:0;background:#0a1822;border-bottom:1px solid #1c3547;z-index:10;}
-nav .nav-inner{max-width:800px;margin:0 auto;padding:14px 24px;display:flex;gap:22px;flex-wrap:wrap;}
-nav a{color:#eaf1f4;text-decoration:none;font-size:14px;font-weight:bold;letter-spacing:0.3px;transition:color 0.2s;}
-nav a:hover{color:#f2a93b;}
+nav .nav-inner{max-width:800px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;}
+nav .home-link{color:#eaf1f4;text-decoration:none;font-size:14px;font-weight:bold;letter-spacing:0.3px;transition:color 0.2s;}
+nav .home-link:hover{color:#f2a93b;}
+nav .nav-links{display:none;flex-direction:column;gap:0;position:absolute;top:100%;left:24px;background:#0a1822;border:1px solid #1c3547;border-radius:6px;min-width:180px;overflow:hidden;}
+nav .nav-links.open{display:flex;}
+nav .nav-links a{color:#eaf1f4;text-decoration:none;font-size:14px;font-weight:bold;letter-spacing:0.3px;padding:12px 16px;border-top:1px solid #1c3547;}
+nav .nav-links a:first-child{border-top:none;}
+nav .nav-links a:hover{color:#f2a93b;background:#0e1f2b;}
+.hamburger{display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;padding:6px;color:#eaf1f4;font-size:14px;font-weight:bold;}
+.hamburger .bars{display:flex;flex-direction:column;gap:5px;}
+.hamburger .bars span{width:22px;height:2px;background:#eaf1f4;display:block;transition:transform 0.2s, opacity 0.2s;}
+.hamburger.open .bars span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open .bars span:nth-child(2){opacity:0;}
+.hamburger.open .bars span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 section{scroll-margin-top:70px;}
 </style>
 </head>
@@ -31,64 +66,45 @@ section{scroll-margin-top:70px;}
 
 <nav>
   <div class="nav-inner">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#education">Education</a>
-    <a href="#toolkit">Toolkit</a>
-    <a href="#contact">Contact</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span class="bars"><span></span><span></span><span></span></span>
+      Menu
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#experience">Experience</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#home" class="home-link">Home</a>
   </div>
 </nav>
+
+<script>
+document.getElementById('hamburgerBtn').addEventListener('click', function(){
+  document.getElementById('navLinks').classList.toggle('open');
+  document.getElementById('hamburgerBtn').classList.toggle('open');
+});
+document.querySelectorAll('#navLinks a').forEach(function(link){
+  link.addEventListener('click', function(){
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('open');
+  });
+});
+</script>
 
 <div class="wrap">
 
 <section id="home">
+<div class="profile-photo" data-src="images/profile.jpg"><!-- <img src="images/profile.jpg" alt="Henry Chitanda profile photo"> -->Add Profile Photo</div>
 <h1>Henry Chitanda</h1>
 <h2>Mechanical &amp; Mechatronics Engineer — Tanzania</h2>
 </section>
 
 <section id="about">
 <p>Registered Graduate Engineer (ERB) with hands-on experience spanning quality control, pipeline construction, and industrial maintenance. Comfortable working across mechanical, electrical, and instrumentation systems.</p>
-</section>
-
-<section id="experience">
-<h3>Experience</h3>
-<div class="card">
-  <strong>Quality Control — Flange Management</strong><br>
-  China Petroleum Pipeline Engineering Co., Ltd. (CPP) — East Africa Crude Oil Pipeline, Pump Station 4<br>
-  <span style="color:#9fb4bf;font-size:14px;">May 2026 – Present. Verifying flange assembly quality against ASME/API standards, interpreting P&amp;ID drawings and torque/bolt-tightening specs.</span>
-  <div class="photo-grid">
-    <div class="photo-box"><!-- <img src="images/flange-1.jpg" alt="Flange Management photo 1"> -->Add Photo 1</div>
-    <div class="photo-box"><!-- <img src="images/flange-2.jpg" alt="Flange Management photo 2"> -->Add Photo 2</div>
-  </div>
-</div>
-<div class="card">
-  <strong>HDPE Welder &amp; PU Operator</strong><br>
-  China Petroleum Pipeline Engineering Co., Ltd. (CPP) — East Africa Crude Oil Pipeline, Muleba/Kagera<br>
-  <span style="color:#9fb4bf;font-size:14px;">September 2025 – May 2026. HDPE welding and polyurethane coating operations on pipeline sections.</span>
-  <div class="photo-grid">
-    <div class="photo-box"><!-- <img src="images/hdpe-1.jpg" alt="HDPE Welder photo 1"> -->Add Photo 1</div>
-    <div class="photo-box"><!-- <img src="images/hdpe-2.jpg" alt="HDPE Welder photo 2"> -->Add Photo 2</div>
-  </div>
-</div>
-<div class="card">
-  <strong>Industrial Instrumentation Technician</strong><br>
-  Mufindi Paper Mills<br>
-  <span style="color:#9fb4bf;font-size:14px;">June 2021 – October 2022. Maintenance, calibration, and troubleshooting of industrial instrumentation systems.</span>
-  <div class="photo-grid">
-    <div class="photo-box"><!-- <img src="images/instrumentation-1.jpg" alt="Instrumentation Technician photo 1"> -->Add Photo 1</div>
-    <div class="photo-box"><!-- <img src="images/instrumentation-2.jpg" alt="Instrumentation Technician photo 2"> -->Add Photo 2</div>
-  </div>
-</div>
-<div class="card">
-  <strong>Welding &amp; Machine Fabrication</strong><br>
-  Mwene's Metal Workshop, Mbeya<br>
-  <span style="color:#9fb4bf;font-size:14px;">August 2020 – June 2021. Arc welding and fabrication of custom metal machine parts.</span>
-  <div class="photo-grid">
-    <div class="photo-box"><!-- <img src="https://raw.githubusercontent.com/Chitanda22/henry-chitanda/e88072d0432e15ad0ca7eb637ddd35b6a834c384/repo/GITHUB%20PICTURE/1000082467.jpg" alt="Welding & Fabrication photo 1"> -->Add Photo 1</div>
-    <div class="photo-box"><!-- <img src="images/welding-2.jpg" alt="Welding & Fabrication photo 2"> -->Add Photo 2</div>
-  </div>
-</div>
 </section>
 
 <section id="education">
@@ -124,6 +140,86 @@ section{scroll-margin-top:70px;}
 </ul>
 </section>
 
+<section id="experience">
+<h3>Experience</h3>
+<div class="card">
+  <strong>Quality Control — Flange Management</strong><br>
+  China Petroleum Pipeline Engineering Co., Ltd. (CPP) — East Africa Crude Oil Pipeline, Pump Station 4<br>
+  <span style="color:#9fb4bf;font-size:14px;">May 2026 – Present. Verifying flange assembly quality against ASME/API standards, interpreting P&amp;ID drawings and torque/bolt-tightening specs.</span>
+  <div class="photo-grid" data-gallery="flange" data-title="Quality Control — Flange Management">
+    <div class="photo-box" data-src="images/flange-1.jpg"><!-- <img src="images/flange-1.jpg" alt="Flange Management photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/flange-2.jpg"><!-- <img src="images/flange-2.jpg" alt="Flange Management photo 2"> -->Add Photo 2</div>
+  </div>
+</div>
+<div class="card">
+  <strong>HDPE Welder &amp; PU Operator</strong><br>
+  China Petroleum Pipeline Engineering Co., Ltd. (CPP) — East Africa Crude Oil Pipeline, Muleba/Kagera<br>
+  <span style="color:#9fb4bf;font-size:14px;">September 2025 – May 2026. HDPE welding and polyurethane coating operations on pipeline sections.</span>
+  <div class="photo-grid" data-gallery="hdpe" data-title="HDPE Welder &amp; PU Operator">
+    <div class="photo-box" data-src="images/hdpe-1.jpg"><!-- <img src="images/hdpe-1.jpg" alt="HDPE Welder photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/hdpe-2.jpg"><!-- <img src="images/hdpe-2.jpg" alt="HDPE Welder photo 2"> -->Add Photo 2</div>
+  </div>
+</div>
+<div class="card">
+  <strong>Industrial Instrumentation Technician</strong><br>
+  Mufindi Paper Mills<br>
+  <span style="color:#9fb4bf;font-size:14px;">June 2021 – October 2022. Maintenance, calibration, and troubleshooting of industrial instrumentation systems.</span>
+  <div class="photo-grid" data-gallery="instrumentation" data-title="Industrial Instrumentation Technician">
+    <div class="photo-box" data-src="images/instrumentation-1.jpg"><!-- <img src="images/instrumentation-1.jpg" alt="Instrumentation Technician photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/instrumentation-2.jpg"><!-- <img src="images/instrumentation-2.jpg" alt="Instrumentation Technician photo 2"> -->Add Photo 2</div>
+  </div>
+</div>
+<div class="card">
+  <strong>Welding &amp; Machine Fabrication</strong><br>
+  Mwene's Metal Workshop, Mbeya<br>
+  <span style="color:#9fb4bf;font-size:14px;">August 2020 – June 2021. Arc welding and fabrication of custom metal machine parts.</span>
+  <div class="photo-grid" data-gallery="welding" data-title="Welding &amp; Machine Fabrication">
+    <div class="photo-box" data-src="images/welding-1.jpg"><!-- <img src="images/welding-1.jpg" alt="Welding & Fabrication photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/welding-2.jpg"><!-- <img src="images/welding-2.jpg" alt="Welding & Fabrication photo 2"> -->Add Photo 2</div>
+  </div>
+</div>
+</section>
+
+<section id="gallery">
+<h3>Gallery</h3>
+
+<p style="color:#9fb4bf;font-size:14px;margin-bottom:6px;">Quality Control — Flange Management</p>
+<div class="carousel" data-gallery="flange-gallery" data-title="Quality Control — Flange Management">
+  <div class="carousel-track">
+    <div class="photo-box" data-src="images/flange-gallery-1.jpg"><!-- <img src="images/flange-gallery-1.jpg" alt="Flange Management photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/flange-gallery-2.jpg"><!-- <img src="images/flange-gallery-2.jpg" alt="Flange Management photo 2"> -->Add Photo 2</div>
+    <div class="photo-box" data-src="images/flange-gallery-3.jpg"><!-- <img src="images/flange-gallery-3.jpg" alt="Flange Management photo 3"> -->Add Photo 3</div>
+  </div>
+</div>
+
+<p style="color:#9fb4bf;font-size:14px;margin:24px 0 6px;">HDPE Welder &amp; PU Operator</p>
+<div class="carousel" data-gallery="hdpe-gallery" data-title="HDPE Welder &amp; PU Operator">
+  <div class="carousel-track">
+    <div class="photo-box" data-src="images/hdpe-gallery-1.jpg"><!-- <img src="images/hdpe-gallery-1.jpg" alt="HDPE Welder photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/hdpe-gallery-2.jpg"><!-- <img src="images/hdpe-gallery-2.jpg" alt="HDPE Welder photo 2"> -->Add Photo 2</div>
+    <div class="photo-box" data-src="images/hdpe-gallery-3.jpg"><!-- <img src="images/hdpe-gallery-3.jpg" alt="HDPE Welder photo 3"> -->Add Photo 3</div>
+  </div>
+</div>
+
+<p style="color:#9fb4bf;font-size:14px;margin:24px 0 6px;">Industrial Instrumentation Technician</p>
+<div class="carousel" data-gallery="instrumentation-gallery" data-title="Industrial Instrumentation Technician">
+  <div class="carousel-track">
+    <div class="photo-box" data-src="images/instrumentation-gallery-1.jpg"><!-- <img src="images/instrumentation-gallery-1.jpg" alt="Instrumentation Technician photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/instrumentation-gallery-2.jpg"><!-- <img src="images/instrumentation-gallery-2.jpg" alt="Instrumentation Technician photo 2"> -->Add Photo 2</div>
+    <div class="photo-box" data-src="images/instrumentation-gallery-3.jpg"><!-- <img src="images/instrumentation-gallery-3.jpg" alt="Instrumentation Technician photo 3"> -->Add Photo 3</div>
+  </div>
+</div>
+
+<p style="color:#9fb4bf;font-size:14px;margin:24px 0 6px;">Welding &amp; Machine Fabrication</p>
+<div class="carousel" data-gallery="welding-gallery" data-title="Welding &amp; Machine Fabrication">
+  <div class="carousel-track">
+    <div class="photo-box" data-src="images/welding-gallery-1.jpg"><!-- <img src="images/welding-gallery-1.jpg" alt="Welding & Fabrication photo 1"> -->Add Photo 1</div>
+    <div class="photo-box" data-src="images/welding-gallery-2.jpg"><!-- <img src="images/welding-gallery-2.jpg" alt="Welding & Fabrication photo 2"> -->Add Photo 2</div>
+    <div class="photo-box" data-src="images/welding-gallery-3.jpg"><!-- <img src="images/welding-gallery-3.jpg" alt="Welding & Fabrication photo 3"> -->Add Photo 3</div>
+  </div>
+</div>
+</section>
+
 <section id="contact">
 <h3>Contact</h3>
 <p>
@@ -131,8 +227,119 @@ Email: <a href="mailto:chitandahenry@gmail.com">chitandahenry@gmail.com</a><br>
 Phone: <a href="tel:+255755270819">+255 755 270 819</a><br>
 Location: Tanzania
 </p>
+
+<div class="social-links">
+  <!-- Instagram: replace # with your profile URL, e.g. https://instagram.com/yourusername -->
+  <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38C1.35 2.68.94 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.66-.67 1.07-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13C21.32 1.35 20.65.94 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44z"/></svg>
+  </a>
+  <!-- X (Twitter): replace # with your profile URL, e.g. https://x.com/yourusername -->
+  <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zm-1.29 19.5h2.04L6.48 3.24H4.29z"/></svg>
+  </a>
+  <!-- LinkedIn: replace # with your profile URL, e.g. https://linkedin.com/in/yourusername -->
+  <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z"/></svg>
+  </a>
+</div>
 </section>
 
 </div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <button class="lightbox-prev" id="lightboxPrev">&#10094;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-next" id="lightboxNext">&#10095;</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script>
+var currentGallery = [];
+var currentIndex = 0;
+var currentTitle = '';
+
+function openLightbox(galleryName, title, startIndex){
+  var boxes = document.querySelectorAll('[data-gallery="' + galleryName + '"] .photo-box');
+  currentGallery = Array.prototype.map.call(boxes, function(b){ return b.getAttribute('data-src'); });
+  currentTitle = title;
+  currentIndex = startIndex;
+  showLightboxImage();
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function showLightboxImage(){
+  var src = currentGallery[currentIndex];
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxCaption').textContent = currentTitle + ' (' + (currentIndex + 1) + ' of ' + currentGallery.length + ')';
+}
+
+document.querySelectorAll('.photo-grid').forEach(function(grid){
+  var galleryName = grid.getAttribute('data-gallery');
+  var title = grid.getAttribute('data-title');
+  grid.querySelectorAll('.photo-box').forEach(function(box, i){
+    box.addEventListener('click', function(){
+      openLightbox(galleryName, title, i);
+    });
+  });
+});
+
+var profilePhoto = document.querySelector('.profile-photo');
+if(profilePhoto){
+  profilePhoto.addEventListener('click', function(){
+    currentGallery = [profilePhoto.getAttribute('data-src')];
+    currentTitle = 'Profile Photo';
+    currentIndex = 0;
+    showLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+  });
+}
+
+document.querySelectorAll('.carousel').forEach(function(carousel){
+  var galleryName = carousel.getAttribute('data-gallery');
+  var title = carousel.getAttribute('data-title');
+  var track = carousel.querySelector('.carousel-track');
+  var boxes = carousel.querySelectorAll('.photo-box');
+  var slideIndex = 0;
+  var started = false;
+
+  boxes.forEach(function(box, i){
+    box.addEventListener('click', function(){
+      openLightbox(galleryName, title, i);
+    });
+  });
+
+  if(boxes.length > 1){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !started){
+          started = true;
+          setInterval(function(){
+            slideIndex = (slideIndex + 1) % boxes.length;
+            track.style.transform = 'translateX(-' + (slideIndex * 100) + '%)';
+          }, 3000);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(carousel);
+  }
+});
+
+document.getElementById('lightboxClose').addEventListener('click', function(){
+  document.getElementById('lightbox').classList.remove('open');
+});
+document.getElementById('lightboxPrev').addEventListener('click', function(){
+  currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+  showLightboxImage();
+});
+document.getElementById('lightboxNext').addEventListener('click', function(){
+  currentIndex = (currentIndex + 1) % currentGallery.length;
+  showLightboxImage();
+});
+document.getElementById('lightbox').addEventListener('click', function(e){
+  if(e.target.id === 'lightbox'){ document.getElementById('lightbox').classList.remove('open'); }
+});
+</script>
+
 </body>
 </html>
